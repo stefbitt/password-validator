@@ -7,6 +7,11 @@ resource "aws_eip" "nat_eip_2" {
 resource "aws_eip" "nat_eip_3" {
 }
 
+module "policy" {
+  source = "./modules/policies"
+    policy_name = "infra-password-role-policy"
+}
+
 module "vpc" {
   source             = "./modules/vpc"
   cidr_block         = "10.0.0.0/16"
