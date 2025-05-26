@@ -56,7 +56,7 @@ module "api_gateway" {
   api_name        = "valida-password-gateway"
   api_description = "API para validar passwords"
   integration_uri = module.load_balancer.nlb_dns_name
-  nlb_dns_name    = module.ecs.nlb_dns_name
+  nlb_dns_name    = module.load_balancer.nlb_dns_name
   stage_name      = "dev"
   nlb_arn           = module.load_balancer.nlb_arn
 }
