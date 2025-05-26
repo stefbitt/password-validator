@@ -39,11 +39,11 @@ jobs:
 
       - name: Build, tag, and push Docker image to ECR
         env:
-          ECR_REGISTRY: 471112644854.dkr.ecr.us-east-1.amazonaws.com
+          ECR_REGISTRY: 251839969735.dkr.ecr.us-east-1.amazonaws.com
           ECR_REPOSITORY: ecr-password-validator
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          IMAGE_TAG_SHORT=${IMAGE_TAG:0:8}
+          IMAGE_TAG_SHORT=${IMAGE_TAG:0:1}
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
 
@@ -98,11 +98,11 @@ jobs:
 
       - name: Register ECS Task Definition
         env:
-          ECR_REGISTRY: 471112644854.dkr.ecr.us-east-1.amazonaws.com
+          ECR_REGISTRY: 251839969735.dkr.ecr.us-east-1.amazonaws.com
           ECR_REPOSITORY: ecr-password-validator
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          IMAGE_TAG_SHORT=${IMAGE_TAG:0:8}
+          IMAGE_TAG_SHORT=${IMAGE_TAG:0:1}
           cat <<EOF > task-definition.json
           {
             "family": "password-validator",
@@ -124,10 +124,6 @@ jobs:
                   }
                 ],
                 "environment": [
-                  {
-                    "name": "SPRING_PROFILES_ACTIVE",
-                    "value": "cloud-aws"
-                  },
                   {
                     "name": "AWS_ACCESS_KEY_ID",
                     "value": "${{ secrets.AWS_ACCESS_KEY_ID }}"
