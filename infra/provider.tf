@@ -9,7 +9,7 @@ terraform {
   }
 
   backend "s3" {
-    bucket         = "password-validator-terraform"
+    bucket         = "password-validator-terraform-backend"
     key            = "backend.tf"
     region         = "us-east-1"
   }
