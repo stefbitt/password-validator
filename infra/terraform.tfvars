@@ -1,11 +1,11 @@
 aws_region         = "us-east-1"
 cluster_name       = "cluster-ecs"
-vpc_id             = "vpc-03b91bc644cf5310b"
-subnets            = ["subnet-05566c4bd55d36813", "subnet-0ad8efbf666859719", "subnet-0ef9f03353c3b5982"]
+vpc_id             = "vpc-0ba076940f35ea8d5"
+subnets            = ["subnet-0e5ffef49dad5868e", "subnet-073c5141c4590605b", "subnet-0e102fcd4b909c625"]
 task_family        = "password-validator"
-execution_role_arn = "arn:aws:iam::471112644854:role/ecsTaskExecutionRole"
+execution_role_arn = "arn:aws:iam::251839969735:role/ecsTaskExecutionRole"
 container_name     = "password-validator"
-container_image    = "471112644854.dkr.ecr.us-east-1.amazonaws.com/ecr-password-validator:latest"
+container_image    = "251839969735.dkr.ecr.us-east-1.amazonaws.com/ecr-password-validator:latest"
 container_port     = 80
 log_group_name     = "/ecs/service-password-validator"
 service_name       = "password-validator"
