@@ -64,12 +64,6 @@ resource "aws_ecs_task_definition" "task_definition" {
           protocol      = "tcp"
         }
       ]
-      environment = [
-        {
-          name  = "SPRING_PROFILES_ACTIVE"
-          value = "aws"
-        }
-      ]
       logConfiguration = {
         logDriver = "awslogs"
         options   = {

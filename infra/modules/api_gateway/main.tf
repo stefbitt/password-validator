@@ -32,18 +32,18 @@ resource "aws_api_gateway_resource" "resource_validate" {
   path_part   = "validate"
 }
 
-resource "aws_api_gateway_method" "get_password_validate" {
+resource "aws_api_gateway_method" "post_password_validate" {
   rest_api_id   = aws_api_gateway_rest_api.valida_password_gateway.id
   resource_id   = aws_api_gateway_resource.resource_validate.id
-  http_method   = "GET"
+  http_method   = "POST"
   authorization = "NONE"
 }
 
 resource "aws_api_gateway_integration" "validate_integration" {
   rest_api_id             = aws_api_gateway_rest_api.valida_password_gateway.id
   resource_id             = aws_api_gateway_resource.resource_validate.id
-  http_method             = aws_api_gateway_method.get_password_validate.http_method
-  integration_http_method = "GET"
+  http_method             = aws_api_gateway_method.post_password_validate.http_method
+  integration_http_method = "POST"
   type                    = "HTTP_PROXY"
   uri                     = var.integration_uri
   connection_type         = "VPC_LINK"
@@ -58,7 +58,7 @@ resource "aws_api_gateway_deployment" "validate_deployment" {
   stage_name  = var.stage_name
 
   depends_on = [
-    aws_api_gateway_method.get_password_validate,
+    aws_api_gateway_method.post_password_validate,
     aws_api_gateway_integration.validate_integration
   ]
 }
