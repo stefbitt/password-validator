@@ -23,7 +23,7 @@ module "vpc" {
 
 module "load_balancer" {
   source            = "./modules/load_balancer"
-  name              = "my-nlb"
+  name              = "${var.service_name}-nlb"
   target_group_name = "ecs-tg"
   port              = 80
   vpc_id            = module.vpc.vpc_id
@@ -32,8 +32,8 @@ module "load_balancer" {
 
 module "ecs" {
   source             = "./modules/ecs"
-  cluster_name       = "my-ecs-cluster"
-  task_family        = "my-task"
+  cluster_name       = "${var.service_name}-cluster"
+  task_family        = "${var.service_name}-task"
   execution_role_arn = var.execution_role_arn
   vpc_id             = module.vpc.vpc_id
   service_name       = var.service_name

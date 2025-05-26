@@ -3,44 +3,44 @@ resource "aws_ecs_cluster" "ecs_cluster" {
 
   setting {
     name  = "containerInsights"
-    value = "enabled"
+    value = "false"
   }
 }
 
-resource "aws_lb" "nlb" {
-  name               = "${var.service_name}-nlb"
-  internal           = true
-  load_balancer_type = "network"
-  security_groups    = [var.elb_security_group]
-  subnets            = var.private_subnets
-}
+# resource "aws_lb" "nlb" {
+#   name               = "${var.service_name}-nlb"
+#   internal           = true
+#   load_balancer_type = "network"
+#   security_groups    = [var.elb_security_group]
+#   subnets            = var.private_subnets
+# }
+#
+# resource "aws_lb_target_group" "ecs_tg" {
+#   name        = "${var.service_name}-tg"
+#   port        = var.container_port
+#   protocol    = "TCP"
+#   vpc_id      = var.vpc_id
+#   target_type = "ip"
+#
+#   health_check {
+#     path                = "/actuator"
+#     interval            = 30
+#     timeout             = 5
+#     healthy_threshold   = 2
+#     unhealthy_threshold = 2
+#   }
+# }
 
-resource "aws_lb_target_group" "ecs_tg" {
-  name        = "${var.service_name}-tg"
-  port        = var.container_port
-  protocol    = "TCP"
-  vpc_id      = var.vpc_id
-  target_type = "ip"
-
-  health_check {
-    path                = "/actuator"
-    interval            = 30
-    timeout             = 5
-    healthy_threshold   = 2
-    unhealthy_threshold = 2
-  }
-}
-
-resource "aws_lb_listener" "tpc" {
-  load_balancer_arn = aws_lb.nlb.arn
-  port              = 80
-  protocol          = "TCP"
-
-  default_action {
-    type             = "forward"
-    target_group_arn = aws_lb_target_group.ecs_tg.arn
-  }
-}
+# resource "aws_lb_listener" "tpc" {
+#   load_balancer_arn = aws_lb.nlb.arn
+#   port              = 80
+#   protocol          = "TCP"
+#
+#   default_action {
+#     type             = "forward"
+#     target_group_arn = aws_lb_target_group.ecs_tg.arn
+#   }
+# }
 
 resource "aws_ecs_task_definition" "task_definition" {
   family                   = var.task_family
@@ -94,8 +94,6 @@ resource "aws_ecs_service" "ecs_service" {
     container_name   = var.container_name
     container_port   = var.container_port
   }
-
-  depends_on = [aws_lb_listener.tpc]
 }
 
 resource "aws_cloudwatch_log_group" "ecs_log_group" {
