@@ -93,7 +93,7 @@ Ou execute a classe `PasswordValidatorApplication` via sua IDE.
 POST http://localhost:80/api/v1/password/validate
 
 ## Cloud Aws
-POST http://password-validator-alb-596544518.us-east-1.elb.amazonaws.com/api/v1/password/validate
+POST https://o5u5gjbv2j.execute-api.us-east-1.amazonaws.com/dev/api/v1/password/validate
 
 # Docker
 para subir a aplicação através do docker basta executar os comandos abaixo
